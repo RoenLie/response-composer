@@ -1,0 +1,23 @@
+{
+  "development": {
+    "proxy": {
+      "origin": "https://dev84640.service-now.com/",
+      "headers": {
+        "Authorization": "Basic YWRtaW46U2VydmljZW5vd0BSb2VuQDE5OTE="
+      },
+      "proxies": ["/api/*", "/amb"]
+    },
+    "test": {
+      "unit": ["@servicenow/cli-jest-plugin"]
+    }
+  },
+  "styles": {
+    "themes": [
+      {
+        "module": "@servicenow/sass-theme",
+        "main": ["theme.scss"],
+        "copyFiles": ["type/*", "*.scss"]
+      }
+    ]
+  }
+}
