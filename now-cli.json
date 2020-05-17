@@ -1,7 +1,7 @@
 {
   "development": {
     "proxy": {
-      "origin": "https://dev84640.service-now.com/",
+      "origin": "https://dev84640.service-now.com",
       "headers": {
         "Authorization": "Basic YWRtaW46U2VydmljZW5vd0BSb2VuQDE5OTE="
       },

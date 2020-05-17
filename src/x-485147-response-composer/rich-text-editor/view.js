@@ -1,17 +1,22 @@
 export default (state, { updateState, dispatch }) => {
-	const iframe = state.shadowRoot
+	const document = state.shadowRoot
 		? state.shadowRoot.getElementById("richTextField").contentDocument
 		: "";
-	const body = state.shadowRoot ? iframe.getElementsByTagName("body")[0] : "";
+
+	const iFrame = state.shadowRoot
+		? state.shadowRoot.getElementById("richTextField")
+		: "";
+
+	const body = state.shadowRoot ? document.getElementsByTagName("body")[0] : "";
 
 	let showSource = false;
 	let editMode = true;
 
 	const enableEditMode = (state) => {
-		iframe.designMode = state ? "On" : "Off";
+		document.designMode = state ? "On" : "Off";
 	};
 	const execCmd = (command, arg) => {
-		iframe.execCommand(command, false, arg || null);
+		document.execCommand(command, false, arg || null);
 	};
 	const toggleSource = () => {
 		showSource = !showSource;
@@ -22,6 +27,32 @@ export default (state, { updateState, dispatch }) => {
 		editMode = !editMode;
 		if (editMode) enableEditMode(true);
 		else enableEditMode(false);
+	};
+
+	let dragY;
+	let dragInterval;
+	let interval;
+
+	const resizeFrame = (state) => {
+		if (state == "start") {
+			if (!iFrame.style.height) iFrame.style.height = "300px";
+			dragInterval = dragY;
+			interval = setInterval(() => resizeFrame(), 50);
+			return;
+		}
+		if (state == "end") {
+			clearInterval(interval);
+			dragY = 0;
+			dragInterval = 0;
+			return;
+		}
+
+		const distanceToMove = dragInterval - dragY;
+		if (distanceToMove != 0) {
+			iFrame.style.height =
+				Number(iFrame.style.height.replace(/px/g, "")) - distanceToMove + "px";
+			dragInterval = dragY;
+		}
 	};
 
 	if (state.shadowRoot) {
@@ -42,10 +73,10 @@ export default (state, { updateState, dispatch }) => {
 			}
 		};
 	}
-
+	// do resize with mouse move instead.
 	return (
 		<div>
-			<div>
+			<div id="function-container">
 				<button on-click={() => execCmd("bold")}>
 					<b>B</b>
 				</button>
@@ -142,7 +173,26 @@ export default (state, { updateState, dispatch }) => {
 				</button>
 				<button on-click={() => execCmd("selectAll")}>Select all</button>
 			</div>
-			<iframe id="richTextField" name="richTextField"></iframe>
+			<div id="frame-container">
+				<iframe id="richTextField" name="richTextField" />
+				<div
+					id="resize"
+					draggable="true"
+					droppable="true"
+					on-dragstart={(e) => {
+						e.dataTransfer.setDragImage(new Image(), 0, 0);
+						e.dataTransfer.effectAllow = "move";
+						dragY = e.screenY;
+						resizeFrame("start");
+					}}
+					on-dragend={(e) => {
+						resizeFrame("end");
+					}}
+					on-drag={(e) => (dragY = e.screenY)}
+				>
+					DRAG
+				</div>
+			</div>
 			<button>TO CUSTOMER</button>
 			<button>AS WORK-NOTE</button>
 		</div>

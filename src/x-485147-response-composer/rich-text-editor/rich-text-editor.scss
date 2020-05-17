@@ -1,6 +1,23 @@
 @import '@servicenow/sass-kit/host';
 
+:host {
+  display: block;
+}
+
 #richTextField {
   width: 100%;
-  height: 30vh;
+  height: 300px;
+}
+
+#frame-container {
+  position: relative;
+
+  #resize {
+    background-color: red;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    cursor: s-resize;
+    user-select: none;
+  }
 }
