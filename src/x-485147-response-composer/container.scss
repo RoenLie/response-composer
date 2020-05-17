@@ -5,13 +5,15 @@
 }
 
 .wrapper {
+  font-family: "Segoe UI", "Frutiger", "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", "Arial",
+    "sans-serif";
   padding: 1em;
 }
 
 .textArea {
-  white-space: pre-wrap;
+  overflow: hidden;
   word-wrap: break-word;
-  font-size: 1em;
+  font-size: 2em;
   border: 2px solid black;
   min-height: 30vh;
 }
