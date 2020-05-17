@@ -3,7 +3,11 @@
   "version": "0.0.1",
   "private": false,
   "description": "Component to write text for case journal field.",
-  "keywords": ["ServiceNow", "Now Experience UI Component", "@eyeshare/response-composer"],
+  "keywords": [
+    "ServiceNow",
+    "Now Experience UI Component",
+    "@eyeshare/response-composer"
+  ],
   "readme": "./README.md",
   "engines": {
     "node": ">=8.6.0",

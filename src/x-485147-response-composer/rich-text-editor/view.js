@@ -1,19 +1,17 @@
 export default (state, { updateState, dispatch }) => {
 	const iframe = state.shadowRoot
-		? state.shadowRoot.getElementById("richTextField")
+		? state.shadowRoot.getElementById("richTextField").contentDocument
 		: "";
-	const body = state.shadowRoot
-		? iframe.contentDocument.getElementsByTagName("body")[0]
-		: "";
+	const body = state.shadowRoot ? iframe.getElementsByTagName("body")[0] : "";
 
 	let showSource = false;
 	let editMode = true;
 
 	const enableEditMode = (state) => {
-		iframe.contentDocument.designMode = state ? "On" : "Off";
+		iframe.designMode = state ? "On" : "Off";
 	};
 	const execCmd = (command, arg) => {
-		iframe.contentDocument.execCommand(command, false, arg || null);
+		iframe.execCommand(command, false, arg || null);
 	};
 	const toggleSource = () => {
 		showSource = !showSource;
@@ -26,7 +24,24 @@ export default (state, { updateState, dispatch }) => {
 		else enableEditMode(false);
 	};
 
-	if (state.shadowRoot) enableEditMode(true);
+	if (state.shadowRoot) {
+		enableEditMode(true);
+
+		body.onpaste = function (pasteEvent) {
+			var item = pasteEvent.clipboardData.items[0];
+
+			if (item.type.indexOf("image") === 0) {
+				var blob = item.getAsFile();
+
+				var reader = new FileReader();
+				reader.onload = function (event) {
+					execCmd("insertImage", event.target.result);
+				};
+
+				reader.readAsDataURL(blob);
+			}
+		};
+	}
 
 	return (
 		<div>
@@ -127,11 +142,7 @@ export default (state, { updateState, dispatch }) => {
 				</button>
 				<button on-click={() => execCmd("selectAll")}>Select all</button>
 			</div>
-			<iframe
-				id="richTextField"
-				name="richTextField"
-				data-height="900px"
-			></iframe>
+			<iframe id="richTextField" name="richTextField"></iframe>
 			<button>TO CUSTOMER</button>
 			<button>AS WORK-NOTE</button>
 		</div>

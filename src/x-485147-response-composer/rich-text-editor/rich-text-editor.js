@@ -10,7 +10,10 @@ createCustomElement("rich-text-editor", {
 		output: "",
 		shadowRoot: "",
 	},
-	properties: {},
+	properties: {
+		output: "",
+		settings: {},
+	},
 	actionHandlers: {
 		[actionTypes.COMPONENT_RENDERED]: {
 			effect({
