@@ -49,6 +49,7 @@ export default (state, { updateState, dispatch }) => {
 
 		const distanceToMove = dragInterval - dragY;
 		if (distanceToMove != 0) {
+			if (distanceToMove > 200) return;
 			iFrame.style.height =
 				Number(iFrame.style.height.replace(/px/g, "")) - distanceToMove + "px";
 			dragInterval = dragY;
