@@ -7,12 +7,32 @@ createCustomElement("rich-text-editor", {
 	renderer: { type: snabbdom },
 	view,
 	initialState: {
-		output: "",
 		shadowRoot: "",
 	},
 	properties: {
-		output: "",
-		settings: {},
+		settings: {
+			default: {
+				iframeBody: "",
+				buttons: [
+					{
+						label: "default",
+						onclick: function () {
+							const settings = {
+								output: "",
+								iframeBody: "",
+								buttons: [
+									{
+										label: "default",
+										onclick: function () {},
+									},
+								],
+							};
+							console.log("settings:", settings);
+						},
+					},
+				],
+			},
+		},
 	},
 	actionHandlers: {
 		[actionTypes.COMPONENT_RENDERED]: {

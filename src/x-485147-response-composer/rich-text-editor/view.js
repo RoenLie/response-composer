@@ -3,7 +3,9 @@ import "./icons/icon-italic.js";
 import "./icons/icon-underline.js";
 import "./icons/icon-strikethrough.js";
 
-export default (state, { updateState, dispatch }) => {
+export default (state, { updateState, updateProperties, dispatch }) => {
+	const { output, properties } = state;
+
 	const document = state.shadowRoot
 		? state.shadowRoot.getElementById("richTextField").contentDocument
 		: "";
@@ -61,7 +63,10 @@ export default (state, { updateState, dispatch }) => {
 		}
 	};
 
+	let buttons = state.properties.settings.buttons;
 	if (state.shadowRoot) {
+		state.iframeBody = body;
+
 		enableEditMode(true);
 		body.onpaste = function (pasteEvent) {
 			var item = pasteEvent.clipboardData.items[0];
@@ -77,8 +82,14 @@ export default (state, { updateState, dispatch }) => {
 				reader.readAsDataURL(blob);
 			}
 		};
+
+		body.onblur = () => {
+			const settings = properties.settings;
+			settings.iframeBody = body;
+			updateProperties({ settings: settings });
+		};
 	}
-	// do resize with mouse move instead.
+
 	return (
 		<div>
 			<div className="function-container">
@@ -206,9 +217,16 @@ export default (state, { updateState, dispatch }) => {
 					DRAG
 				</div>
 			</div>
-			<button>TO CUSTOMER</button>
 
-			<button>AS WORK-NOTE</button>
+			{state.properties.settings.buttons.map((button) => (
+				<button
+					key={button.label}
+					on-click={button.onclick}
+					value={button.label}
+				>
+					{button.label}
+				</button>
+			))}
 		</div>
 	);
 };
