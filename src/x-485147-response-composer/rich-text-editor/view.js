@@ -1,3 +1,8 @@
+import "./icons/icon-bold.js";
+import "./icons/icon-italic.js";
+import "./icons/icon-underline.js";
+import "./icons/icon-strikethrough.js";
+
 export default (state, { updateState, dispatch }) => {
 	const document = state.shadowRoot
 		? state.shadowRoot.getElementById("richTextField").contentDocument
@@ -37,7 +42,7 @@ export default (state, { updateState, dispatch }) => {
 		if (state == "start") {
 			if (!iFrame.style.height) iFrame.style.height = "300px";
 			dragInterval = dragY;
-			interval = setInterval(() => resizeFrame(), 50);
+			interval = setInterval(() => resizeFrame(), 25);
 			return;
 		}
 		if (state == "end") {
@@ -58,7 +63,6 @@ export default (state, { updateState, dispatch }) => {
 
 	if (state.shadowRoot) {
 		enableEditMode(true);
-
 		body.onpaste = function (pasteEvent) {
 			var item = pasteEvent.clipboardData.items[0];
 
@@ -77,18 +81,26 @@ export default (state, { updateState, dispatch }) => {
 	// do resize with mouse move instead.
 	return (
 		<div>
-			<div id="function-container">
+			<div className="function-container">
 				<button on-click={() => execCmd("bold")}>
-					<b>B</b>
+					<a title="bold">
+						<icon-bold />
+					</a>
 				</button>
 				<button on-click={() => execCmd("italic")}>
-					<i>I</i>
+					<a title="italic">
+						<icon-italic />
+					</a>
 				</button>
 				<button on-click={() => execCmd("underline")}>
-					<u>U</u>
+					<a title="underline">
+						<icon-underline />
+					</a>
 				</button>
 				<button on-click={() => execCmd("strikeThrough")}>
-					<s>S</s>
+					<a title="strikethrough">
+						<icon-strikethrough />
+					</a>
 				</button>
 				Text color:
 				<input
@@ -174,10 +186,10 @@ export default (state, { updateState, dispatch }) => {
 				</button>
 				<button on-click={() => execCmd("selectAll")}>Select all</button>
 			</div>
-			<div id="frame-container">
+			<div className="frame-container">
 				<iframe id="richTextField" name="richTextField" />
 				<div
-					id="resize"
+					className="resize"
 					draggable="true"
 					droppable="true"
 					on-dragstart={(e) => {
@@ -195,6 +207,7 @@ export default (state, { updateState, dispatch }) => {
 				</div>
 			</div>
 			<button>TO CUSTOMER</button>
+
 			<button>AS WORK-NOTE</button>
 		</div>
 	);

@@ -1,4 +1,4 @@
-@import '@servicenow/sass-kit/host';
+@import "@servicenow/sass-kit/host";
 
 :host {
   display: block;
@@ -10,14 +10,40 @@
 }
 
 #frame-container {
-  position: relative;
+}
 
-  #resize {
+.function-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 2em);
+
+  button {
+    background-color: rgba(243, 243, 243, 1);
+    border: 1px solid white;
+    outline: none;
+    &:hover {
+      background-color: rgb(47, 214, 219);
+    }
+    &:active {
+      background-color: orange;
+    }
+  }
+}
+
+.frame-container {
+  position: relative;
+  border: 2px solid rgba(243, 243, 243, 1);
+
+  .resize {
     background-color: red;
     position: absolute;
     bottom: 0;
     right: 0;
     cursor: s-resize;
     user-select: none;
+  }
+
+  iframe {
+    border: none;
+    outline: none;
   }
 }
