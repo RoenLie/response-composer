@@ -27,12 +27,19 @@ export default (state, { updateState, dispatch }) => {
 			{
 				label: "Post comment",
 				onclick: () => {
+					console.log(
+						`"[code]${settings.iframeBody.innerHTML
+							.replace(/\n/g, "\\n")
+							.replace(/"/g, "'")
+							.replace(/='>/g, "=' >")}[/code]"`
+					);
+
 					dispatch("USER_FETCH_REQUESTED", {
 						id: properties.sysId,
-						data: `{"comments":"[code]${settings.iframeBody.innerHTML.replace(
-							/\n/g,
-							"\\n"
-						)}[/code]"}`,
+						data: `{"comments":"[code]${settings.iframeBody.innerHTML
+							.replace(/\n/g, "\\n")
+							.replace(/"/g, "'")
+							.replace(/='>/g, "=' >")}[/code]"}`,
 					});
 				},
 			},

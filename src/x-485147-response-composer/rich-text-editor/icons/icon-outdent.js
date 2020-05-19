@@ -11,16 +11,14 @@ const view = (state) => {
 			xmlns="http://www.w3.org/2000/svg"
 			viewBox="0 0 512 512"
 			style="height: auto;
-				   width: 100%;
-				   overflow: visible;
-				   color: rgba(0, 0, 0, 0.75);
-				   justify-self: center;"
+				width: 100%;
+				overflow: visible;
+				color: rgba(0, 0, 0, 0.75);
+				justify-self: center;"
 			>
 				<path fill="currentColor"
-					d="M333.49 238a122 122 0 0 0 27-65.21C367.87 96.49 308 32 233.42 32H34a16 
-					16 0 0 0-16 16v48a16 16 0 0 0 16 16h31.87v288H34a16 16 0 0 0-16 16v48a16 
-					16 0 0 0 16 16h209.32c70.8 0 134.14-51.75 141-122.4 4.74-48.45-16.39-92.06-50.83-119.6zM145.66 
-					112h87.76a48 48 0 0 1 0 96h-87.76zm87.76 288h-87.76V288h87.76a56 56 0 0 1 0 112z" />
+				d="M100.69 363.29c10 10 27.31 2.93 27.31-11.31V160c0-14.32-17.33-21.31-27.31-11.31l-96 96a16 16 0 0 0 0 22.62zM432 416H16a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16zm3.17-128H204.83A12.82 12.82 0 0 0 192 300.83v38.34A12.82 12.82 0 0 0 204.83 352h230.34A12.82 12.82 0 0 0 448 339.17v-38.34A12.82 12.82 0 0 0 435.17 288zm0-128H204.83A12.82 12.82 0 0 0 192 172.83v38.34A12.82 12.82 0 0 0 204.83 224h230.34A12.82 12.82 0 0 0 448 211.17v-38.34A12.82 12.82 0 0 0 435.17 160zM432 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16z"
+				/>
 		</svg>`;
 	}
 
@@ -31,11 +29,11 @@ const view = (state) => {
 	);
 };
 
-createCustomElement("icon-bold", {
+createCustomElement("icon-outdent", {
 	renderer: { type: snabbdom },
 	view,
 	initialState: {
-		shadowRoot: "",
+		shadowRoot: undefined,
 	},
 	actionHandlers: {
 		[actionTypes.COMPONENT_RENDERED]: {

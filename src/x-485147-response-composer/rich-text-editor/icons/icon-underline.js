@@ -9,11 +9,11 @@ const view = (state) => {
 			focusable="false"
 			role="img"
 			xmlns="http://www.w3.org/2000/svg"
-			viewBox="0 0 448 512"
+			viewBox="0 0 512 512"
 			style="height: auto;
 				   width: 100%;
+				   overflow: visible;
 				   color: rgba(0, 0, 0, 0.75);
-				   align-self: center;
 				   justify-self: center;"
 			>
 				<path fill="currentColor"

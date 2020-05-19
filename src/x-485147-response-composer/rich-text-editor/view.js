@@ -2,9 +2,35 @@ import "./icons/icon-bold.js";
 import "./icons/icon-italic.js";
 import "./icons/icon-underline.js";
 import "./icons/icon-strikethrough.js";
+import "./icons/icon-resize.js";
+import "./icons/icon-forecolor.js";
+import "./icons/icon-backcolor.js";
+import "./icons/icon-align-left.js";
+import "./icons/icon-align-center.js";
+import "./icons/icon-align-right.js";
+import "./icons/icon-align-solid.js";
+import "./icons/icon-outdent.js";
+import "./icons/icon-indent.js";
+import "./icons/icon-cut.js";
+import "./icons/icon-copy.js";
+import "./icons/icon-edit.js";
+import "./icons/icon-font.js";
+import "./icons/icon-image.js";
+import "./icons/icon-link.js";
+import "./icons/icon-unlink.js";
+import "./icons/icon-list-ordered.js";
+import "./icons/icon-list-unordered.js";
+import "./icons/icon-paragraph.js";
+import "./icons/icon-redo.js";
+import "./icons/icon-undo.js";
+import "./icons/icon-select-all.js";
+import "./icons/icon-source.js";
+import "./icons/icon-subscript.js";
+import "./icons/icon-superscript.js";
+import "./icons/icon-hr.js";
 
 export default (state, { updateState, updateProperties, dispatch }) => {
-	const { output, properties } = state;
+	const { properties } = state;
 
 	const document = state.shadowRoot
 		? state.shadowRoot.getElementById("richTextField").contentDocument
@@ -15,6 +41,7 @@ export default (state, { updateState, updateProperties, dispatch }) => {
 		: "";
 
 	const body = state.shadowRoot ? document.getElementsByTagName("body")[0] : "";
+	const head = state.shadowRoot ? document.getElementsByTagName("head")[0] : "";
 
 	let showSource = false;
 	let editMode = true;
@@ -66,8 +93,11 @@ export default (state, { updateState, updateProperties, dispatch }) => {
 	let buttons = state.properties.settings.buttons;
 	if (state.shadowRoot) {
 		state.iframeBody = body;
+		const style = `body {font-family: "Segoe UI";}`;
+		head.innerHTML = `<style>${style}`;
 
 		enableEditMode(true);
+
 		body.onpaste = function (pasteEvent) {
 			var item = pasteEvent.clipboardData.items[0];
 
@@ -91,95 +121,269 @@ export default (state, { updateState, updateProperties, dispatch }) => {
 	}
 
 	return (
-		<div>
+		<div className="wrapper">
 			<div className="function-container">
-				<button on-click={() => execCmd("bold")}>
+				<button
+					className="icon-wrapper hover active"
+					on-click={() => execCmd("bold")}
+				>
 					<a title="bold">
 						<icon-bold />
 					</a>
 				</button>
-				<button on-click={() => execCmd("italic")}>
+				<button
+					className="icon-wrapper hover active"
+					on-click={() => execCmd("italic")}
+				>
 					<a title="italic">
 						<icon-italic />
 					</a>
 				</button>
-				<button on-click={() => execCmd("underline")}>
+				<button
+					className="icon-wrapper hover active"
+					on-click={() => execCmd("underline")}
+				>
 					<a title="underline">
 						<icon-underline />
 					</a>
 				</button>
-				<button on-click={() => execCmd("strikeThrough")}>
+				<button
+					className="icon-wrapper hover active"
+					on-click={() => execCmd("strikeThrough")}
+				>
 					<a title="strikethrough">
 						<icon-strikethrough />
 					</a>
 				</button>
-				Text color:
-				<input
-					type="color"
-					on-change={(event) => {
-						execCmd("foreColor", event.path[0].value);
-					}}
-				/>
-				Background color:{" "}
-				<input
-					type="color"
-					on-change={(event) => {
-						execCmd("hiliteColor", event.path[0].value);
-					}}
-				/>
-				<button on-click={() => execCmd("justifyLeft")}>{"<="}</button>
-				<button on-click={() => execCmd("justifyCenter")}>{"=="}</button>
-				<button on-click={() => execCmd("justifyRight")}>{"=>"}</button>
-				<button on-click={() => execCmd("justifyFull")}>{"<=>"}</button>
-				<button on-click={() => execCmd("cut")}>cut</button>
-				<button on-click={() => execCmd("copy")}>copy</button>
-				<button on-click={() => execCmd("indent")}>Indent</button>
-				<button on-click={() => execCmd("outdent")}>Outdent</button>
-				<button on-click={() => execCmd("subscript")}>Subscript</button>
-				<button on-click={() => execCmd("superscript")}>Superscript</button>
-				<button on-click={() => execCmd("undo")}>Undo</button>
-				<button on-click={() => execCmd("redo")}>Redo</button>
-				<button on-click={() => execCmd("insertUnorderedList")}>ul</button>
-				<button on-click={() => execCmd("insertOrderedList")}>ol</button>
-				<button on-click={() => execCmd("insertParagraph")}>P</button>
-				<select
-					on-change={(event) => {
-						execCmd("formatBlock", event.path[0].value);
+
+				<a className="icon-wrapper relative hover active" title="text color">
+					<icon-forecolor />
+					<input
+						className="color-picker"
+						type="color"
+						on-change={(event) => {
+							execCmd("foreColor", event.path[0].value);
+						}}
+					/>
+				</a>
+				<a
+					className="icon-wrapper relative hover active"
+					title="background color"
+				>
+					<icon-backcolor />
+					<input
+						className="color-picker"
+						type="color"
+						on-change={(event) => {
+							execCmd("hiliteColor", event.path[0].value);
+						}}
+					/>
+				</a>
+				<button
+					className="icon-wrapper hover active"
+					on-click={() => execCmd("justifyLeft")}
+				>
+					<a title="align left">
+						<icon-align-left />
+					</a>
+				</button>
+				<button
+					className="icon-wrapper hover active"
+					on-click={() => execCmd("justifyCenter")}
+				>
+					<a title="align center">
+						<icon-align-center />
+					</a>
+				</button>
+				<button
+					className="icon-wrapper hover active"
+					on-click={() => execCmd("justifyRight")}
+				>
+					<a title="align right">
+						<icon-align-right />
+					</a>
+				</button>
+				<button
+					className="icon-wrapper hover active"
+					on-click={() => execCmd("justifyFull")}
+				>
+					<a title="align full">
+						<icon-align-solid />
+					</a>
+				</button>
+
+				<button
+					className="icon-wrapper hover active"
+					on-click={() => execCmd("cut")}
+				>
+					<a title="cut">
+						<icon-cut />
+					</a>
+				</button>
+
+				<button
+					className="icon-wrapper hover active"
+					on-click={() => execCmd("copy")}
+				>
+					<a title="copy">
+						<icon-copy />
+					</a>
+				</button>
+
+				<button
+					className="icon-wrapper hover active"
+					on-click={() => execCmd("indent")}
+				>
+					<a title="indent">
+						<icon-indent />
+					</a>
+				</button>
+
+				<button
+					className="icon-wrapper hover active"
+					on-click={() => execCmd("outdent")}
+				>
+					<a title="outdent">
+						<icon-outdent />
+					</a>
+				</button>
+
+				<button
+					className="icon-wrapper hover active"
+					on-click={() => execCmd("subscript")}
+				>
+					<a title="subscript">
+						<icon-subscript />
+					</a>
+				</button>
+				<button
+					className="icon-wrapper hover active"
+					on-click={() => execCmd("superscript")}
+				>
+					<a title="superscript">
+						<icon-superscript />
+					</a>
+				</button>
+				<button
+					className="icon-wrapper hover active"
+					on-click={() => execCmd("undo")}
+				>
+					<a title="undo">
+						<icon-undo />
+					</a>
+				</button>
+				<button
+					className="icon-wrapper hover active"
+					on-click={() => execCmd("redo")}
+				>
+					<a title="redo">
+						<icon-redo />
+					</a>
+				</button>
+				<button
+					className="icon-wrapper hover active"
+					on-click={() => execCmd("insertOrderedList")}
+				>
+					<a title="list-ordered">
+						<icon-list-ordered />
+					</a>
+				</button>
+				<button
+					className="icon-wrapper hover active"
+					on-click={() => execCmd("insertUnorderedList")}
+				>
+					<a title="list-unordered">
+						<icon-list-unordered />
+					</a>
+				</button>
+				<button
+					className="icon-wrapper hover active"
+					on-click={() => execCmd("insertParagraph")}
+				>
+					<a title="paragraph">
+						<icon-paragraph />
+					</a>
+				</button>
+				<button
+					className="icon-wrapper hover active"
+					on-click={() => execCmd("insertHorizontalRule")}
+				>
+					<a title="horizontal rule">
+						<icon-hr />
+					</a>
+				</button>
+				<button
+					className="icon-wrapper hover active"
+					on-click={() => {
+						const text = prompt("enter image url");
+						if (!text > "") return;
+						execCmd("insertImage", text);
 					}}
 				>
-					<option value="H1">H1</option>
-					<option value="H2">H2</option>
-					<option value="H3">H3</option>
-					<option value="H4">H4</option>
-					<option value="H5">H5</option>
-					<option value="H6">H6</option>
-				</select>
-				<button on-click={() => execCmd("insertHorizontalRule")}>HR</button>
+					<a title="image">
+						<icon-image />
+					</a>
+				</button>
 				<button
+					className="icon-wrapper hover active"
+					on-click={() => execCmd("selectAll")}
+				>
+					<a title="select-all">
+						<icon-select-all />
+					</a>
+				</button>
+				<button
+					className="icon-wrapper hover active"
 					on-click={() => {
 						const text = prompt("enter url");
 						if (!text > "") return;
 						execCmd("createLink", text);
 					}}
 				>
-					Link
+					<a title="link">
+						<icon-link />
+					</a>
 				</button>
-				<button on-click={() => execCmd("unlink")}>Unlink</button>
-				<button on-click={() => toggleSource()}>Toggle Source</button>
-				<button on-click={() => toggleEdit()}>Toggle Edit</button>
+				<button
+					className="icon-wrapper hover active"
+					on-click={() => execCmd("unlink")}
+				>
+					<a title="unlink">
+						<icon-unlink />
+					</a>
+				</button>
+				<button
+					className="icon-wrapper hover active"
+					on-click={() => toggleSource()}
+				>
+					<a title="source">
+						<icon-source />
+					</a>
+				</button>
+				<button
+					className="icon-wrapper hover active"
+					on-click={() => toggleEdit()}
+				>
+					<a title="edit">
+						<icon-edit />
+					</a>
+				</button>
+
 				<select
+					className="icon-wrapper selector first"
 					on-change={(event) => {
 						execCmd("fontName", event.path[0].value);
 					}}
 				>
-					<option value="Arial">Arial</option>
 					<option value="Segoe UI">Segoe UI</option>
+					<option value="Arial">Arial</option>
 					<option value="Courier">Courier</option>
 					<option value="Verdana">Verdana</option>
 					<option value="Helvetica">Helvetica</option>
 					<option value="Georgia">Georgia</option>
 				</select>
 				<select
+					className="icon-wrapper selector second"
 					on-change={(event) => {
 						execCmd("fontSize", event.path[0].value);
 					}}
@@ -192,11 +396,21 @@ export default (state, { updateState, updateProperties, dispatch }) => {
 					<option value="6">6</option>
 					<option value="7">7</option>
 				</select>
-				<button on-click={() => execCmd("insertImage", prompt("image url"))}>
-					image
-				</button>
-				<button on-click={() => execCmd("selectAll")}>Select all</button>
+				<select
+					className="icon-wrapper selector third"
+					on-change={(event) => {
+						execCmd("formatBlock", event.path[0].value);
+					}}
+				>
+					<option value="H1">H1</option>
+					<option value="H2">H2</option>
+					<option value="H3">H3</option>
+					<option value="H4">H4</option>
+					<option value="H5">H5</option>
+					<option value="H6">H6</option>
+				</select>
 			</div>
+
 			<div className="frame-container">
 				<iframe id="richTextField" name="richTextField" />
 				<div
@@ -214,19 +428,24 @@ export default (state, { updateState, updateProperties, dispatch }) => {
 					}}
 					on-drag={(e) => (dragY = e.screenY)}
 				>
-					DRAG
+					<a title="drag to resize">
+						<icon-resize />
+					</a>
 				</div>
 			</div>
 
-			{state.properties.settings.buttons.map((button) => (
-				<button
-					key={button.label}
-					on-click={button.onclick}
-					value={button.label}
-				>
-					{button.label}
-				</button>
-			))}
+			<div className="button-container">
+				{state.properties.settings.buttons.map((button) => (
+					<button
+						key={button.label}
+						on-click={button.onclick}
+						value={button.label}
+						className="main-button"
+					>
+						{button.label}
+					</button>
+				))}
+			</div>
 		</div>
 	);
 };
